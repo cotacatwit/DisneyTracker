@@ -83,7 +83,7 @@ def main(argv):
     ### 3. Generate texts
     ##############################################
 
-    message = "\n%u Update" % len(notifications)
+    message = "Subject: Updates!\n%u Update" % len(notifications)
     if len(notifications) > 1 or len(notifications) == 0:
         message += "s"
     message += " at "
@@ -168,7 +168,7 @@ def main(argv):
 
     smtp_server = "smtp.gmail.com"
     port = 587
-    sender_email = "waittimesbot@gmail.com"
+    sender_email = "disneytracker2021@gmail.com"
 
     context = ssl.create_default_context()
 
