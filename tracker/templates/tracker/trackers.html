@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% verbatim %}
+
+<div id="app">
+
+  <!-- How To -->
+  <div class="dt-how-to">
+    <div class="dt-how-to-handle" id="dtHowToHandle" @click="showHowTo">
+      <img src="/static/assets/how_to_icon.png" alt="click to show how to" class="how-to-icon">
+      <div class="dt-how-to-list">
+        <ul v-for="howTo in howTos">
+          <li>{{ howTo }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End How To -->
+
+  <!-- Submit Page -->
+  <div class="dt-submit-bg">
+    <div class="thank-you-div">
+      <div class="thank-you-head center middle">
+        <strong>Thank You, {{ name }}</strong>
+      </div>
+      <div class="thank-you-body center middle">
+        <div class="thank-you-detail">
+          <p>
+            You are successfully signed up
+            to recieve ride notifications
+            from {{startdate}} - {{enddate}}.
+          </p>
+        </div>
+        <p>We hope you enjoy your vacation!</p>
+        <p><strong>Feel free to UPDATE, ADD, or STOP anytime.</strong></p>
+      </div>
+    </div>
+  </div>
+  <!-- End Submit Page -->
+
+  <!-- Background -->
+  <div class="container-fluid dt-background">
+    <!-- Big Container -->
+    <div class="container">
+
+      <!-- Logo -->
+      <div class="row">
+        <div class="col">
+          <div class="dt-logo-div">
+            <img src="/static/assets/dt_logo.png" alt="disnet tracker logo" class="dt-logo">
+          </div>
+        </div>
+      </div>
+      <!-- End Logo -->
+
+      <!-- Slogan -->
+      <div class="row">
+        <div class="col">
+          <div class="slogan-div">
+            <strong class="slogan"><i>Select Your Ride. Get Notified.</i></strong>
+          </div>
+        </div>
+      </div>
+      <!-- End Slogan -->
+
+      <!-- Body -->
+      <div class="row">
+
+        <!-- Table -->
+        <div class="col-lg-6">
+          <div class="dt-table-div">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" width="30%" style="padding-left: 20px;">Ride</th>
+                  <th scope="col" width="30%">Restriction</th>
+                  <th scope="col" width="20%">Current Wait Time</th>
+                  <th scope="col" width="20%" style="padding-right: 20px;">*Average Wait Time</th>
+                </tr>
+              </thead>
+            </table>
+            <div class="accordion" v-for="body in bodies" :id="body.id">
+              <div class="accordion-item">
+                <h2 class="accordion-header" :id="body.heading">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="toId(body.collapsing)" aria-expanded="true" :aria-controls="body.collapsing">
+                    <strong>{{ body.park }}</strong>
+                  </button>
+                </h2>
+                <div :id="body.collapsing" class="accordion-collapse collapse show" :aria-labelledby="body.heading">
+                  <div class="accordion-body">
+                    <table class="table table-light table-striped">
+                      <tbody>
+                        <tr v-for="ride in body.rides" @click="toSelectedRides(ride.name, ride.waitTime)">
+                          <td width="30%">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" :value="ride.name" :id="ride.name" @click="toSelectedRides(ride.name, ride.waitTime)">
+                              <label class="form-check-label" :for="ride.name" @click="checkBoxWhenClickOnItsRow(ride.name)">{{ ride.name }}</label>
+                            </div>
+                          </td>
+                          <td width="30%" @click="checkBoxWhenClickOnItsRow(ride.name)"> {{ ride.restr }} </td>
+                          <td width="20%" class="center middle" @click="checkBoxWhenClickOnItsRow(ride.name)"> {{ ride.waitTime }} </td>
+                          <td width="20%" class="center middle" @click="checkBoxWhenClickOnItsRow(ride.name)"> {{ ride.aveWaitTime }} </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p style="text-align: center; margin-top: 5px;"><strong><i>*Average wait times from last week (xx/xx/xxxx - xx/xx/xxxx)</i></strong></p>
+        </div>
+        <!-- End Table -->
+
+        <!-- Form -->
+        <div class="col-lg-6">
+          <form v-on:submit.prevent="signUp">
+            <div class="dt-form-div">
+              <!-- Inputs -->
+              <div class="row inputs-div">
+                <div class="col">
+                  <input type="text" required class="form-control"  v-model="name" placeholder="Name"/>
+                  <input type="date" required name="startDatePicker" class="form-control" v-model="startdate" placeholder="Start Date"/>
+                </div>
+                <div class="col">
+                  <input type="text" required class="form-control" v-model="phone" placeholder="Phone Number"/>
+                  <input type="date" required name="endDatePicker" class="form-control" v-model="enddate" placeholder="End Date"/>
+                </div>
+              </div>
+              <!-- End Inputs -->
+  
+              <!-- Selected Rides -->
+              <div class="dt-selected-rides-div">
+                <strong>Selected Rides</strong>
+              </div>
+              <div class="dt-selected-rides-table">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col" width="50%" style="padding-left: 20px;">Ride</th>
+                      <th scope="col" width="25%">Current Wait Time</th>
+                      <th scope="col" width="25%" style="padding-right: 20px;">Wanted Wait Time</th>
+                    </tr>
+                  </thead>
+                </table>
+                <table class="table table-light table-striped">
+                  <tbody>
+                    <tr v-for="(ride, index) in selectedRidesWaitTimes">
+                      <td width="50%" class="middle"><span>&times</span> {{ ride.ride }}</td>
+                      <td width="25%" class="center middle">{{ ride.currWaitTime }}</td>
+                      <td width="25%" class="center middle">
+                        <input type="number" class="form-control form-control-sm center middle" :id="toSelectedRideId(index)"/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- End Selected Rides -->
+  
+              <!-- Submit Button -->
+              <button  type="submit" class="btn btn-primary btn-lg"><strong>SUBMIT</strong></button>
+              <!-- End Submit Button -->
+  
+            </div>
+          </form>
+          
+        </div>
+        <!-- End Form -->
+
+      </div>
+      <!-- End Body -->
+    </div>
+    <!-- End Big Container -->
+  </div>
+  <!-- End Background -->
+
+  <!-- Footer -->
+  <div class="dt-footer">
+    <div class="row">
+      <div class="col" style="text-align: left;">
+        <a href="http://disneydvd.disney.go.com/cinderella-diamond-edition.html" style="color: #fff; text-decoration: none;">Background Image by Disney</a>
+      </div>
+      <div class="col credit" style="text-align: right;">
+        Copyright © 2021 DisneyTracker. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+  <!-- End Footer -->
+</div>
+
+{% endverbatim %}
+{% endblock %}

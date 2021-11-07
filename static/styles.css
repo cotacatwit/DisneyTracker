@@ -1,0 +1,53 @@
+.center {text-align: center; vertical-align: top;}
+.middle {vertical-align: middle;}
+
+.dt-how-to-handle:hover {cursor: pointer;}
+.dt-how-to-handle {border-radius: 0 50% 50% 0; background: #9cceff; height: 500px; width: 500px; position: absolute; z-index: 3; margin-top: calc((100vh - 500px)/2); transition: 1s; transform: translateX(-430px);}
+.how-to-icon {position: absolute; transform: rotate(90deg); z-index: 4; width: 60px; margin-top: calc((100% - 56px)/2); right: 5px;}
+.dt-how-to-list {width: 380px; font-size: 1.2rem; margin-top: calc((100% - 344px)/2); padding-left: 40px;}
+
+.dt-submit-bg {background: rgba(41, 171, 226, .8); height: 100vh; width: 100vw; position: fixed; z-index: 2; display: none;}
+.thank-you-div {width: 400px; margin: auto; padding-top: calc((100vh - 288px)/2);}
+.thank-you-head {background: #dbbade; border-radius: 15px 15px 0 0; font-size: 1.7rem; padding: 10px;}
+.thank-you-body {background: #cae7ff; background-image: url('/static/assets/favicon.png'); background-repeat: no-repeat; background-position: center center; background-size: 230px; border-radius: 0 0 15px 15px; font-size: 1.2rem; padding: 20px;}
+.thank-you-detail {width: 270px; margin: auto;}
+.thank-you-body strong {font-size: .9rem;}
+
+div .dt-background {position: relative; z-index: 1; padding: 0; background: url('/static/assets/background.jpg') no-repeat top right fixed; background-attachment: fixed; background-size: cover;}
+
+.dt-logo-div {text-align: center; margin: 35px auto 15px;}
+.dt-logo {width: 220px;}
+.slogan-div {text-align: center; margin-bottom: 15px;}
+.slogan {
+  font-size: 1.5rem;
+  color: #fff;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.table th {text-align: center; vertical-align: middle;}
+.table {margin-bottom: 0;}
+.table-light{
+  --bs-table-bg: rgba(255, 255, 255, 1);
+  --bs-table-accent-bg: rgba(255, 255, 255, 1);
+  --bs-table-striped-color: #000;
+  --bs-table-striped-bg: rgba(219, 186, 222, .4);
+  --bs-table-active-color: #000;
+  --bs-table-active-bg: rgba(41, 171, 226, 1);
+  --bs-table-hover-color: #000;
+  --bs-table-hover-bg: rgba(41, 171, 226, .7);
+}
+thead {background: #dbbade;}
+
+.dt-table-div, .dt-form-div {height: 67vh; width: 90%; overflow-y: auto; margin: auto; border: 5px solid #fff; border-radius: 15px;}
+.dt-table-div {background: rgba(219, 186, 222, .7);}
+.accordion-item {border-radius: 0 !important; border: 0; border-top: 1px solid #000;}
+.accordion-body {padding: 0;}
+
+.dt-form-div {background: rgba(255, 255, 255, .7); margin-bottom: 20px; padding: 15px;}
+.inputs-div input {border: 3px solid #000; border-radius: .5rem; margin-bottom: 15px;}
+.dt-selected-rides-div strong {font-size: 1.2rem;}
+.dt-selected-rides-table {height: 35vh; overflow-y: auto; border: 5px solid #fff; background: rgba(219, 186, 222, .7); border-radius: 15px; margin-bottom: 15px;}
+.btn {border-radius: 15px; background: #0071bc; width: 100%;}
+
+body, .dt-footer {background: #0071bc;}
+.dt-footer {font-size: .77rem; width: 99%; margin: auto; padding: 8px 10px; color: #fff;}
