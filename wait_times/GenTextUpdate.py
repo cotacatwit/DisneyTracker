@@ -4,6 +4,8 @@ import smtplib
 import ssl
 import pymongo
 
+from email.message import EmailMessage
+
 def main(argv):
 
     client = pymongo.MongoClient("mongodb+srv://disneyTracker:disneyTracker@cluster0.0gdpf.mongodb.net/test")
@@ -41,7 +43,7 @@ def main(argv):
         rides = data['userRides'].split(',')
         address = data['userPhone']
         print(address)
-        message = "Subject: Update\nHello "
+        message = "Hello "
         message += data['userName']
         message += "!"
         message += "\n\nHere are your current wait time updates:\n\n"
@@ -57,13 +59,20 @@ def main(argv):
         print(message)
 
 
+        msg = EmailMessage()
+        msg['Subject'] = "Update!"
+        msg.set_content(message)
+        msg['From'] = sender_email
+        msg['To'] = address
+
         try:
             server = smtplib.SMTP(smtp_server, port)
             server.ehlo()
             server.starttls(context=context)
             server.ehlo()
             server.login(sender_email, password)
-            server.sendmail(sender_email, address, message)
+            server.send_message(msg)
+
 
         except Exception as e:
             print(e)
@@ -77,7 +86,7 @@ def main(argv):
         print(favorite)
         address = data['userPhone']
         print(address)
-        message = "Subject: Suggestions\nHere are some of our suggestions!\n\n"
+        message = "Here are some of our suggestions!\n\n"
 
         favList = col2.find_one({'rideName':favorite})
 
@@ -134,13 +143,20 @@ def main(argv):
         print(message)
 
 
+        msg = EmailMessage()
+        msg.set_content(message)
+        msg['Subject'] = "Suggestions!"
+        msg['From'] = sender_email
+        msg['To'] = address
+
         try:
             server = smtplib.SMTP(smtp_server, port)
             server.ehlo()
             server.starttls(context=context)
             server.ehlo()
             server.login(sender_email, password)
-            server.sendmail(sender_email, address, message)
+            server.send_message(msg)
+
 
 
         except Exception as e:
