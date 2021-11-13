@@ -41,7 +41,7 @@ def main(argv):
         rides = data['userRides'].split(',')
         address = data['userPhone']
         print(address)
-        message = "Hello "
+        message = "Subject: Update\nHello "
         message += data['userName']
         message += "!"
         message += "\n\nHere are your current wait time updates:\n\n"
@@ -77,7 +77,7 @@ def main(argv):
         print(favorite)
         address = data['userPhone']
         print(address)
-        message = "Here are some of our suggestions!\n\n"
+        message = "Subject: Suggestions\nHere are some of our suggestions!\n\n"
 
         favList = col2.find_one({'rideName':favorite})
 
